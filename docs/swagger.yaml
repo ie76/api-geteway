@@ -1,0 +1,132 @@
+definitions:
+  auth.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  auth.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  auth.RegisterRequest:
+    properties:
+      password:
+        type: string
+      plan_id:
+        type: integer
+      username:
+        type: string
+    required:
+    - password
+    - plan_id
+    - username
+    type: object
+  auth.RegisterResponse:
+    properties:
+      message:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.User:
+    properties:
+      credits:
+        type: integer
+      id:
+        type: integer
+      password:
+        type: string
+      plan_id:
+        type: integer
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Assignement for Issam Elyazidi.
+  title: Assignement API
+  version: "1.0"
+paths:
+  /basic-auth:
+    get:
+      consumes:
+      - application/json
+      description: test a basic auth connexion
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Basic Auth Service Test
+      tags:
+      - Basic Auth
+  /geolocation:
+    get:
+      consumes:
+      - application/json
+      description: get your location by ip
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: geolocation
+      tags:
+      - geolocation
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login a user
+      parameters:
+      - description: Login request
+        in: body
+        name: LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+      summary: Login a new user
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with a username, password and plan id
+      parameters:
+      - description: Register request
+        in: body
+        name: RegisterRequest
+        required: true
+        schema:
+          $ref: '#/definitions/auth.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/auth.RegisterResponse'
+      summary: Register a new user
+      tags:
+      - auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

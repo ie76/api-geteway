@@ -1,0 +1,14 @@
+services:
+  geolocation:
+    service_name: "geolocation"
+    base_url: https://api.ip2location.io
+    cache_duration: 3000
+    auth_method: key
+    auth_credentials:
+      key: 911DC4CF29D8AF244CF82220F18271AC
+  bearer:
+    service_name: "bearer"
+    base_url: https://httpbin.org/bearer
+    auth_credentials:
+      username: foo
+      passowrd: bar
